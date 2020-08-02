@@ -1,7 +1,10 @@
 package java_practice;
 
-public class Main{
+import java.util.stream.IntStream;
+
+public class Main {
 	public static void main(String[] args) {
-		Lambda.lambdaAction();
+		IntStream stream = IntStream.of(1, 2, 3);
+		System.out.println(stream.reduce(1, (x, y) -> x + y));
 	}
-}
+} 
