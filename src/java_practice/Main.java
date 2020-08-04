@@ -1,31 +1,23 @@
 package java_practice;
 
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
 	public static void main(String[] args) {
-		CyclicBarrier barrier = new CyclicBarrier(3);
+		ExecutorService exec = Executors.newFixedThreadPool(3);
 		
-		Runnable r = () -> {
-			String threadName = Thread.currentThread().getName();
-			
-			try {
-				System.out.println(threadName + ": start");
-				Thread.sleep((int)(Math.random() * 5000));
-				
-				System.out.println(threadName + ": waiting");
-				barrier.await();
-				
-			} catch (InterruptedException | BrokenBarrierException e) {
-				e.printStackTrace();
-			}
-			
-			System.out.println(threadName + ": end");
+		Runnable command = () -> {
+			String thread = Thread.currentThread().getName();
+			System.out.println(thread + ": Hello World!");
 		};
 		
-		new Thread(r).start();
-		new Thread(r).start();
-		new Thread(r).start();
+		for (int i = 0; i < 5; i++) {
+			exec.execute(command);
+			exec.execute(command);
+			exec.execute(command);
+        }
+		exec.shutdown();
+		
 	}
 }
