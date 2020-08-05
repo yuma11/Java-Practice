@@ -1,23 +1,18 @@
 package java_practice;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Main {
 	public static void main(String[] args) {
-		ExecutorService exec = Executors.newFixedThreadPool(3);
 		
-		Runnable command = () -> {
-			String thread = Thread.currentThread().getName();
-			System.out.println(thread + ": Hello World!");
-		};
+		Map<Integer, String> map = new TreeMap<>((k1, k2) -> k2.compareTo(k1));
+		map.put(2, "りんご");
+		map.put(7, "ばなな");
+		map.put(3, "ぶどう");
 		
-		for (int i = 0; i < 5; i++) {
-			exec.execute(command);
-			exec.execute(command);
-			exec.execute(command);
-        }
-		exec.shutdown();
-		
+		for(String value : map.values()) {
+			System.out.println(value);
+		}
 	}
 }
