@@ -1,18 +1,31 @@
 package java_practice;
 
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+class Person {
+	private String name;
+	private Integer age;
+	Person(String name, Integer age) {
+		this.name = name;
+		this.age = age;
+	}
+	public Integer getAge() { return age; }
+	public String getName() { return name; }
+}
 
 public class Main {
 	public static void main(String[] args) {
+		List<Person> list = Arrays.asList(
+				new Person("ジョン", 99),
+				new Person("カール", 44),
+				new Person("フレッド", 39));
 		
-		Map<Integer, String> map = new TreeMap<>((k1, k2) -> k2.compareTo(k1));
-		map.put(2, "りんご");
-		map.put(7, "ばなな");
-		map.put(3, "ぶどう");
+		Predicate<Person> p = b -> b.getAge() > 40;
 		
-		for(String value : map.values()) {
-			System.out.println(value);
-		}
+		List<Person> resultList = list.stream().filter(p).collect(Collectors.toList());
+		resultList.forEach(x -> System.out.println(x.getName()));
 	}
 }
